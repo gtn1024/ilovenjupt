@@ -5,6 +5,7 @@ let flag = false;
 let last = Math.random() * screen.availHeight;
 const app = document.getElementById("app");
 app.style.height = `${screen.availHeight}px`;
+const arr = ["I❤️NJUPT", "我爱南邮", "我爱通达"];
 
 const interval = setInterval(() => {
   const ele = document.createElement("div");
@@ -16,10 +17,12 @@ const interval = setInterval(() => {
   ele.style.top = top + "px";
   app.appendChild(ele);
   last = top;
-  ele.innerHTML = `<p style="font-size: 48px;">I❤️NJUPT</p>`;
+  ele.innerHTML = `<p style="font-size: 48px;">${
+    arr[parseInt(Math.random() * arr.length)]
+  }</p>`;
   cnt++;
   console.log(`cnt: ${cnt}`);
-  if (cnt > 150) {
+  if (cnt > 5) {
     clearInterval(interval);
   }
   setTimeout(() => {
@@ -33,10 +36,37 @@ const interval = setInterval(() => {
 const setFlag = setInterval(() => {
   if (flag) {
     clearInterval(setFlag);
-    drawBigLove();
+    drawLove();
   }
 }, 1000);
 
-function drawBigLove() {
-  app.innerHTML = `<span class="big-word">I❤️NJUPT</span>`;
+function drawLove() {
+  const aDiv = document.createElement("div");
+  app.appendChild(aDiv);
+  addSentence(aDiv, 0);
+}
+
+function addSentence(target, sentenceIndex) {
+  if (sentenceIndex >= arr.length) return;
+  const p = document.createElement("p");
+  p.className = "big-word";
+  target.appendChild(p);
+  addWord(p, sentenceIndex, 0);
+  setTimeout(() => {
+    addSentence(target, sentenceIndex + 1);
+  }, (arr[sentenceIndex].length + 1) * 300);
+}
+
+function addWord(target, sentenceIndex, wordIndex) {
+  if (wordIndex >= arr[sentenceIndex].length) return;
+  const span = document.createElement("span");
+  let word = arr[sentenceIndex][wordIndex];
+  if (word === "❤") {
+    word = "❤️";
+  }
+  span.innerHTML = word;
+  target.appendChild(span);
+  setTimeout(() => {
+    addWord(target, sentenceIndex, wordIndex + 1);
+  }, 300);
 }
