@@ -21,8 +21,7 @@ const interval = setInterval(() => {
     arr[parseInt(Math.random() * arr.length)]
   }</p>`;
   cnt++;
-  console.log(`cnt: ${cnt}`);
-  if (cnt > 5) {
+  if (cnt > 150) {
     clearInterval(interval);
   }
   setTimeout(() => {
@@ -30,8 +29,8 @@ const interval = setInterval(() => {
     if (app.childElementCount === 0) {
       flag = true;
     }
-  }, 3500);
-}, 200);
+  }, 4000);
+}, 250);
 
 const setFlag = setInterval(() => {
   if (flag) {
@@ -41,18 +40,16 @@ const setFlag = setInterval(() => {
 }, 1000);
 
 function drawLove() {
-  const aDiv = document.createElement("div");
-  app.appendChild(aDiv);
-  addSentence(aDiv, 0);
+  const aP = document.createElement("p");
+  app.appendChild(aP);
+  addSentence(aP, 0);
 }
 
 function addSentence(target, sentenceIndex) {
   if (sentenceIndex >= arr.length) return;
-  const p = document.createElement("p");
-  p.className = "big-word";
-  target.appendChild(p);
-  addWord(p, sentenceIndex, 0);
+  addWord(target, sentenceIndex, 0);
   setTimeout(() => {
+    target.innerHTML += "<br>";
     addSentence(target, sentenceIndex + 1);
   }, (arr[sentenceIndex].length + 1) * 300);
 }
