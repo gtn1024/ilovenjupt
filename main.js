@@ -30,7 +30,7 @@ const interval = setInterval(() => {
       flag = true;
     }
   }, 4000);
-}, 250);
+}, 115);
 
 const setFlag = setInterval(() => {
   if (flag) {
